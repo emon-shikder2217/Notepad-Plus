@@ -111,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
         notesContainer.appendChild(note);
     };
 
-    // Cursor-following effect for dark theme
     notesContainer.onmousemove = e => {
         if (document.body.classList.contains("dark-theme")) {
             for (const note of document.getElementsByClassName("note")) {
