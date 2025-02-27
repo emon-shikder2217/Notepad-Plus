@@ -1,0 +1,556 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Great+Vibes&family=Happy+Monkey&family=Outfit:wght@100..900&family=Permanent+Marker&family=Varela+Round&display=swap');
+
+body {
+   margin: 0;
+   font-family: "Happy Monkey", serif;
+   transition: background 0.3s, color 0.3s;
+   background: var(--bg-color);
+   color: var(--text-color);
+   overflow-x: hidden;
+}
+
+:root {
+   --bg-color: #f4f4f9;
+   --text-color: #333;
+   --note-bg: white;
+   --note-border: #ddd;
+   --btn-bg: white;
+   --btn-text: #4CAF50;
+   --btn-hover-bg: #4CAF50;
+   --btn-hover-text: white;
+   --card-bg: white;
+}
+
+.dark-theme {
+   --bg-color: rgb(20, 20, 20);
+   --text-color: #e0e0e0;
+   --note-bg: rgba(255, 255, 255, 0.1);
+   --note-border: transparent;
+   --btn-bg: #2a2a2a;
+   --btn-text: #e0e0e0;
+   --btn-hover-bg: #4CAF50;
+   --btn-hover-text: white;
+   --card-bg: rgb(23, 23, 23);
+}
+
+header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 15px 15px;
+   background: #4CAF50;
+   color: white;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+   position: sticky;
+   top: 0;
+   z-index: 10;
+}
+
+header .logo h1 {
+   margin: 0;
+   font-size: 20px;
+   font-family: "Outfit", serif;
+}
+
+header .theme-toggle {
+   cursor: pointer;
+   font-size: 20px;
+   transition: transform 0.3s;
+}
+
+header .theme-toggle:hover {
+   transform: rotate(180deg);
+}
+
+header .btn {
+   padding: 8px 15px;
+   background: var(--btn-bg);
+   color: var(--btn-text);
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   font-size: 14px;
+   transition: background 0.3s, color 0.3s, transform 0.2s;
+   font-family: "Happy Monkey", serif;
+   border: .1px solid #333;
+   box-shadow: 0 0 5px #333;
+}
+
+header .btn:hover {
+   background: var(--btn-hover-bg);
+   color: var(--btn-hover-text);
+   transform: scale(1.05);
+}
+
+#notes-container {
+   padding: 15px;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 15px;
+}
+
+.note {
+   background: var(--note-bg);
+   border: 1px solid var(--note-border);
+   border-radius: 10px;
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+   width: 100%;
+   max-width: 370px;
+   height: 300px;
+   padding-top: 10px;
+   position: relative;
+   transition: transform 0.3s, box-shadow 0.3s;
+   overflow: hidden;
+   margin: 10px;
+   font-family: "Happy Monkey", serif;
+}
+
+.dark-theme .note {
+   background: var(--note-bg);
+   cursor: pointer;
+}
+
+.dark-theme .note:hover {
+   transform: translateY(-5px);
+   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .note::before {
+   content: '';
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   background: radial-gradient(
+       800px circle at var(--mouse-x) var(--mouse-y),
+       rgba(255, 255, 255, 0.06),
+       transparent 40%
+   );
+   border-radius: inherit;
+   opacity: 0;
+   top: 0;
+   left: 0;
+   transition: opacity 0.5s ease;
+   z-index: 1;
+   pointer-events: none;
+}
+
+.dark-theme .note:hover::before {
+   opacity: 1;
+}
+
+.dark-theme .note::after {
+   content: '';
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   background: radial-gradient(
+       600px circle at var(--mouse-x) var(--mouse-y),
+       rgba(255, 255, 255, 0.4),
+       transparent 40%
+   );
+   border-radius: inherit;
+   opacity: 0;
+   top: 0;
+   left: 0;
+   transition: opacity 0.5s ease;
+   z-index: 0;
+   pointer-events: none;
+}
+
+.dark-theme .note:hover::after {
+   opacity: 1;
+}
+
+.note-content {
+   background: var(--card-bg);
+   border-radius: inherit;
+   display: flex;
+   flex-direction: column;
+   flex-grow: 1;
+   inset: 1px;
+   padding: 10px;
+   position: absolute;
+   z-index: 2;
+   font-family: "Outfit", serif;
+}
+
+.note input {
+   width: 100%;
+   font-size: 16px;
+   font-weight: bold;
+   border: none;
+   outline: none;
+   background: transparent;
+   margin-bottom: 8px;
+   color: var(--text-color);
+}
+
+.note textarea {
+   width: 100%;
+   height: 180px;
+   border: none;
+   outline: none;
+   resize: vertical;
+   font-size: 14px;
+   background: transparent;
+   color: var(--text-color);
+   padding: 8px;
+   border-radius: 5px;
+}
+
+.note .actions {
+   margin-top: 8px;
+   display: flex;
+   justify-content: space-between;
+   gap: 8px;
+}
+
+.note button {
+   padding: 9px 15px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   font-size: 12px;
+   transition: background 0.3s, transform 0.2s;
+   font-size: 14px;
+   font-weight: 400;
+}
+
+.note button.save {
+   background: var(--btn-hover-bg);
+   color: white;
+}
+
+.note button.save:hover {
+   background: #388e3c;
+   transform: scale(1.05);
+}
+
+.note button.delete {
+   background: #f44336;
+   color: white;
+}
+
+.note button.delete:hover {
+   background: #d32f2f;
+   transform: scale(1.05);
+}
+
+.note .stats {
+   font-size: 10px;
+   color: #777;
+   margin-top: 5px;
+}
+
+/* Popup Styling */
+.popup {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0, 0, 0, 0.7);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   backdrop-filter: blur(5px);
+   z-index: 100;
+}
+
+.popup.hidden {
+   display: none;
+}
+
+.popup-content {
+   background: var(--note-bg);
+   padding: 15px;
+   border-radius: 10px;
+   width: 90%;
+   max-width: 450px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+   border: 1px solid var(--note-border);
+   position: relative;
+   overflow: hidden;
+   animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+   from { transform: translateY(-50px); opacity: 0; }
+   to { transform: translateY(0); opacity: 1; }
+}
+
+.dark-theme .popup-content::before {
+   content: '';
+   position: absolute;
+   top: -50%;
+   left: -50%;
+   width: 200%;
+   height: 200%;
+   background: radial-gradient(circle, rgba(76, 175, 80, 0.1), transparent);
+   pointer-events: none;
+   z-index: 0;
+   transition: transform 0.3s;
+}
+
+.popup-content h2 {
+   margin: 0 0 10px;
+   color: var(--text-color);
+   font-size: 20px;
+   position: relative;
+   z-index: 1;
+}
+
+.popup-content input {
+   width: 95%;
+   padding: 8px;
+   margin-bottom: 10px;
+   border: 1px solid var(--note-border);
+   border-radius: 8px;
+   background: var(--card-bg);
+   color: var(--text-color);
+   font-size: 14px;
+   transition: border-color 0.3s;
+   position: relative;
+   z-index: 1;
+}
+
+.popup-content input:focus {
+   border-color: #4CAF50;
+   outline: none;
+}
+
+.popup-content p {
+   margin: 8px 0;
+   font-size: 12px;
+   color: var(--text-color);
+   position: relative;
+   z-index: 1;
+}
+
+.popup-actions {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+   position: relative;
+   z-index: 1;
+}
+
+.popup-actions button {
+   padding: 8px 15px;
+   border: none;
+   border-radius: 8px;
+   cursor: pointer;
+   font-size: 12px;
+   transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+   flex-grow: 1;
+}
+
+#popup-save {
+   background: #4CAF50;
+   color: white;
+}
+
+#popup-save:hover {
+   background: #388e3c;
+   transform: scale(1.05);
+   box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+#popup-download {
+   background: #2196F3;
+   color: white;
+}
+
+#popup-download:hover {
+   background: #1976D2;
+   transform: scale(1.05);
+   box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+}
+
+#popup-cancel {
+   background: #f44336;
+   color: white;
+}
+
+#popup-cancel:hover {
+   background: #d32f2f;
+   transform: scale(1.05);
+   box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+   header {
+       padding: 8px 10px;
+   }
+
+   header .logo h1 {
+       font-size: 18px;
+   }
+
+   header .theme-toggle {
+       font-size: 18px;
+   }
+
+   header .btn {
+       padding: 6px 12px;
+       font-size: 12px;
+   }
+
+   #notes-container {
+       padding: 10px;
+       gap: 10px;
+   }
+
+   .note {
+       width: 100%;
+       max-width: 100%;
+       height: 250px;
+   }
+
+   .note-content {
+       padding: 8px;
+   }
+
+   .note input {
+       font-size: 14px;
+   }
+
+   .note textarea {
+       height: 150px;
+       font-size: 12px;
+       padding: 6px;
+   }
+
+   .note .actions {
+       margin-top: 6px;
+       gap: 6px;
+   }
+
+   .note button {
+       padding: 5px 10px;
+       font-size: 10px;
+   }
+
+   .note .stats {
+       font-size: 9px;
+   }
+
+   .popup-content {
+       padding: 10px;
+       width: 85%;
+       max-width: 300px;
+   }
+
+   .popup-content h2 {
+       font-size: 18px;
+   }
+
+   .popup-content input {
+       padding: 6px;
+       font-size: 12px;
+       margin-bottom: 8px;
+   }
+
+   .popup-content p {
+       font-size: 10px;
+       margin: 6px 0;
+   }
+
+   .popup-actions {
+       gap: 8px;
+   }
+
+   .popup-actions button {
+       padding: 6px 10px;
+       font-size: 10px;
+   }
+}
+
+@media (max-width: 480px) {
+   header {
+       flex-wrap: wrap;
+       padding: 5px;
+   }
+
+   header .logo h1 {
+       font-size: 18px;
+       font-family: "Outfit", serif;
+       letter-spacing: 2px;
+   }
+
+   header .theme-toggle {
+       font-size: 16px;
+       margin: 0 10px;
+   }
+
+   header .btn {
+       padding: 18px 18px;
+       font-size: 15px;
+       font-weight: 500;
+   }
+
+   #notes-container {
+       padding: 5px;
+       gap: 8px;
+   }
+
+   .note {
+       height: 200px;
+   }
+
+   .note textarea {
+       height: 120px;
+       font-size: 14px;
+       font-weight: 400;
+   }
+
+   .note .save {
+      height: 30px;
+      width: 80px;
+      font-size: 12.5px;
+      font-weight: 500;
+   }
+
+   .note .delete {
+      height: 30px;
+      width: 80px;
+      font-size: 12.5px;
+      font-weight: 500;
+   }
+
+
+
+   .note .stats {
+       font-size: 8px;
+   }
+
+   .popup-content {
+       width: 90%;
+       max-width: 250px;
+   }
+
+   .popup-content h2 {
+       font-size: 16px;
+   }
+
+   .popup-content input {
+       padding: 5px;
+       font-size: 11px;
+   }
+
+   .popup-content p {
+       font-size: 9px;
+   }
+
+   .popup-actions {
+       flex-direction: column;
+       gap: 5px;
+   }
+
+   .popup-actions button {
+       padding: 5px 8px;
+       font-size: 9px;
+       width: 100%;
+   }
+}

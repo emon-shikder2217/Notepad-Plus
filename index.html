@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Notepad App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>📝 Notepad Plus</h1>
+        </div>
+        <div class="theme-toggle">
+            <i id="theme-icon" class="theme-light">🌙</i>
+        </div>
+        <button id="create-note" class="btn">Create Note</button>
+    </header>
+    <main>
+        <div id="notes-container"></div>
+    </main>
+    <div id="save-popup" class="popup hidden">
+        <div class="popup-content">
+            <h2>Save Note</h2>
+            <input type="text" id="popup-title" placeholder="Note Title">
+            <input type="text" id="popup-tags" placeholder="Tags (comma separated)">
+            <p id="popup-stats"></p>
+            <div class="popup-actions">
+                <button id="popup-save">Save & Close</button>
+                <button id="popup-download">Download as TXT</button>
+                <button id="popup-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
